@@ -18,10 +18,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: 🛠️ Build with Gradle
-        run: ./gradlew build
-
+          
       - name: 🐳 Docker build and push
         run: |
           docker build -t songminju9892/cafeorder:1.0.1 .

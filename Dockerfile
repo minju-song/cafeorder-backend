@@ -1,11 +1,11 @@
-# OpenJDK 17 기반의 스프링 부트 애플리케이션 실행 환경
-FROM openjdk:17-jdk-slim
-
-# 작업 디렉토리 설정
+# ✅ 1단계: Gradle로 빌드
+FROM gradle:7.6.3-jdk17 AS builder
 WORKDIR /app
+COPY . .
+RUN gradle build -x test
 
-# 로컬 Gradle 빌드 결과물을 컨테이너로 복사
-COPY build/libs/*SNAPSHOT.jar app.jar
-
-# 컨테이너 실행 시 자동으로 실행할 명령어
+# ✅ 2단계: JAR 실행 환경만 추출
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/build/libs/*SNAPSHOT.jar app.jar
 CMD ["java", "-jar", "app.jar"]
