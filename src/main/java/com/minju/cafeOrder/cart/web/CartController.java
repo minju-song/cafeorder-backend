@@ -20,7 +20,6 @@ public class CartController {
 
     @PostMapping
     public CartResponse.CartAddResponse insertCart(@RequestBody CartRequest.CartAddRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        System.out.println("요청>>"+request);
         int userId = userDetails.getId();
         return cartService.insertCart(request, userId);
     }
