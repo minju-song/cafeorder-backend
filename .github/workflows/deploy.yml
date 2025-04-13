@@ -35,7 +35,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/cafeOrder
+            cd ~
             docker-compose pull
             docker-compose down
             docker-compose up -d --build
