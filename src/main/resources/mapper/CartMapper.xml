@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.minju.cafeOrder.cart.mapper.CartMapper">
+
+    <insert id="insertCart" parameterType="com.minju.cafeOrder.cart.dto.Cart">
+        INSERT INTO Cart (user_id, menu_id, quantity)
+        VALUES (#{userId}, #{menuId}, #{quantity})
+    </insert>
+
+    <select id="countCart" parameterType="com.minju.cafeOrder.cart.dto.Cart">
+        SELECT COUNT(*)
+        FROM Cart c
+        WHERE user_id = #{userId} and menu_id = #{menuId}
+    </select>
+
+    <update id="updateCart" parameterType="com.minju.cafeOrder.cart.dto.Cart">
+        UPDATE Cart
+        SET quantity = quantity + 1
+        WHERE user_id = #{userId} and menu_id = #{menuId}
+    </update>
+
+    <select id="getCartByUserId" parameterType="int" resultType="com.minju.cafeOrder.cart.dto.CartMenuDto">
+        SELECT
+            c.id as cart_id,
+            c.quantity as quantity,
+            m.id as menu_id,
+            m.name as menu_name,
+            m.category as menu_category,
+            m.price as menu_price,
+            m.image as menu_image
+        FROM Cart c
+        JOIN Menu m ON c.menu_id = m.id
+        WHERE user_id = #{userId};
+    </select>
+</mapper>

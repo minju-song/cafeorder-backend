@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.minju.cafeOrder.menu.mapper.MenuMapper">
+    <select id="getAllMenus" parameterType="map" resultType="com.minju.cafeOrder.menu.dto.Menu">
+        SELECT * FROM Menu
+        <where>
+            <if test="category != null">
+                category = #{category}
+            </if>
+        </where>
+        ORDER BY id ASC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+</mapper>
