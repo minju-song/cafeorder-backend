@@ -1,11 +1,11 @@
-# ✅ 1단계: Gradle로 빌드
-FROM gradle:7.6.3-jdk17 AS builder
+FROM openjdk:17-jdk-slim AS builder
+
 WORKDIR /app
 COPY . .
-RUN gradle build -x test --no-daemon -g /tmp/.gradle
+RUN chmod +x ./gradlew
+RUN ./gradlew clean build -x test --no-daemon
 
-# ✅ 2단계: JAR 실행 환경만 추출
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY --from=builder /app/build/libs/*SNAPSHOT.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
