@@ -2,7 +2,7 @@
 FROM gradle:7.6.3-jdk17 AS builder
 WORKDIR /app
 COPY . .
-RUN gradle build -x test
+RUN gradle build -x test --no-daemon -g /tmp/.gradle
 
 # ✅ 2단계: JAR 실행 환경만 추출
 FROM openjdk:17-jdk-slim
