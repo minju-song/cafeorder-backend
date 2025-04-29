@@ -3,6 +3,7 @@ package com.minju.cafeOrder.aop;
 import com.minju.cafeOrder.core.api.ApiResponse;
 import com.minju.cafeOrder.core.api.ResponseService;
 import com.minju.cafeOrder.core.exception.Exception401;
+import com.minju.cafeOrder.core.exception.LoginException;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.Resource;
@@ -26,6 +27,11 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public Object handleLoginException(Exception ex) {
+        return responseService.getLoginException(ex.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)

@@ -22,7 +22,8 @@ public class ResponseService {
 
         //토큰 에러
         UNKNOWN_TOKEN(1001, "토큰이 존재하지 않습니다."),
-        EXPIRED_TOKEN(1002, "만료된 토큰입니다.");
+        EXPIRED_TOKEN(1002, "만료된 토큰입니다."),
+        LOGIN_EXCEPTION(1003, "잘못된 로그인입니다.");
 
         private final int code;
         private final String msg;
@@ -76,6 +77,10 @@ public class ResponseService {
 
     public ApiResponse<?> getInternalServerError(String message) {
         return new ApiResponse<>(CommonResponse.INTERNAL_SERVER_ERROR.getCode(), message);
+    }
+
+    public ApiResponse<?> getLoginException(String message) {
+        return new ApiResponse<>(CommonResponse.LOGIN_EXCEPTION.getCode(), message);
     }
 
     // 토큰 관련
