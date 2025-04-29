@@ -34,6 +34,6 @@ jobs:
           script: |
             cd ~
             docker-compose pull springboot
-            docker-compose up -d springboot --build
+            docker-compose up -d --build springboot
 
 
